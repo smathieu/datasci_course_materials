@@ -1,6 +1,7 @@
 import sys
 import json
 import pdb
+import re
 
 class Tweet(object):
     def __init__(self, text):
@@ -17,6 +18,10 @@ class Tweet(object):
     def analyze_sentiment(self, sentiments):
         sum = 0
         for word in self.text.split(' '):
+            word = word.lower()
+            word = re.sub(r'[^a-z]', '', word)
+            if len(word) == 0:
+                continue
             if sentiments.has_key(word):
                 sum += sentiments[word]
         return sum
