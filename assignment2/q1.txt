@@ -1,0 +1,58 @@
+(a) select: Write a query that is equivalent to the following relational algebra expression.
+
+σ10398_txt_earn(frequency)
+
+What to turn in: Run your query against your local database and determine the number of records returned. In your browser, enter the number of records returned.
+
+SELECT COUNT(1) FROM Frequency WHERE docid='10398_txt_earn';
+138
+
+(b) select project: Write a SQL statement that is equivalent to the following relational algebra expression.
+
+πterm(σdocid=10398_txt_earn and count=1(frequency))
+
+sqlite> SELECT COUNT(1) FROM Frequency WHERE docid='10398_txt_earn' AND count=1;
+110
+    
+
+What to turn in: Run your query against your local database and determine the number of records returned as described above. On the assignment page, enter the number of records returned.
+
+(c) union: Write a SQL statement that is equivalent to the following relational algebra expression. (Hint: you can use the UNION keyword in SQL)
+
+πterm(σdocid=10398_txt_earn and count=1(frequency)) U πterm(σdocid=925_txt_trade and count=1(frequency))
+
+SELECT COUNT(*) FROM (
+SELECT term FROM Frequency WHERE docid='10398_txt_earn' AND count=1
+UNION 
+SELECT term FROM Frequency WHERE docid='925_txt_trade' AND count=1
+);
+;
+324
+
+What to turn in: Run your query against your local database and determine the number of records returned as described above. On the assignment page, enter the number of records returned.
+
+(d) count: Write a SQL statement to count the number of documents containing the word "parliament"
+
+sqlite> SELECT SUM(count) FROM Frequency WHERE term = 'parliament';
+17
+
+
+What to turn in: Run your query against your local database and determine the count returned as described above. On the assignment page, enter the number of records returned.
+
+(e) big documents Write a SQL statement to find all documents that have more than 300 total terms, including duplicate terms. (Hint: You can use the HAVING clause, or you can use a nested query. Another hint: Remember that the count column contains the term frequencies, and you want to consider duplicates.) (docid, term_count)
+
+sqlite> SELECT COUNT(*) FROM (SELECT *, SUM(count) FROM Frequency GROUP BY docid HAVING SUM(count) > 300 ORDER BY docid);
+107
+    
+
+What to turn in: Run your query against your local database and determine the number of records returned as described above. On the assignment page, enter the number of records returned.
+
+(f) two words: Write a SQL statement to count the number of unique documents that contain both the word 'transactions' and the word 'world'.
+
+sqlite> SELECT COUNT(*) FROM (SELECT * FROM Frequency f1, Frequency f2 WHERE f1.term = 'transactions' AND f2.term = 'world' AND f1.docid = f2.docid);
+3
+
+
+What to turn in: Run your query against your local database and determine the number of records returned as described above. On the assignment page, turn in a text file two_words.txt that contains the number of records.
+
+
