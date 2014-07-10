@@ -56,3 +56,9 @@ sqlite> SELECT COUNT(*) FROM (SELECT * FROM Frequency f1, Frequency f2 WHERE f1.
 What to turn in: Run your query against your local database and determine the number of records returned as described above. On the assignment page, turn in a text file two_words.txt that contains the number of records.
 
 
+
+SELECT A.row_num, B.col_num, sum(A.value * B.value) 
+FROM A
+JOIN B ON B.row_num = A.col_num
+GROUP BY A.row_num, B.col_num;
+
